@@ -1,7 +1,3 @@
-#id_balance
-def id_balan(user_id):
-    global id_balance
-    id_balance = user_id
 
 #Перевод в человеческий вид
 def price_to_human(count):

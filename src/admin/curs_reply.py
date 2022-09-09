@@ -3,6 +3,7 @@ from src.admin.curs import *
 #Курс
 @dp.callback_query_handler(lambda call: call.data.startswith('admin_curs'), state='*')
 async def kkurs(call: types.CallbackQuery):
+    await call.answer()
     state = dp.current_state(user=call.from_user.id)
     await state.set_state(States.CURS)
     await bot.send_message(call.from_user.id, "<b>Сумма на которую умножается реальный курс XRP(прим. 0.1):</b>")

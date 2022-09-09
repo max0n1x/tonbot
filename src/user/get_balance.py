@@ -25,7 +25,4 @@ def balance(user_id):
 #Запрос баланса
 @dp.message_handler(lambda message: message.text == '💰Balance', state='*')
 async def balance_check(message: types.Message):
-    if message.from_user.id in admin_id:
-        await message.answer(balance(message.from_user.id), reply_markup=admin_markup)
-    else:
-        await message.answer(balance(message.from_user.id), reply_markup=user_markup)
+    await message.answer(balance(message.from_user.id))

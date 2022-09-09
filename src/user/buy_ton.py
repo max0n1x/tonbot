@@ -32,11 +32,10 @@ def buy_ton1(user_id, amount):
     balance1 = req[0]
     ton = req[1]
     if balance1 >= amount * get_curs() / 100:
-        text = f'<b>Are you sure you want to buy {amount} TON for {price_to_human(int(amount * get_curs()))} USD?</b>'
+        text = f'<b>Are you sure you want to buy {price_to_human(amount)} TON for {price_to_human(int(amount * get_curs() / 100))} USD?</b>'
         return text
     else:
-        text = False
-        return text
+        return False
 
 #Покупка монет
 @dp.message_handler(lambda message: message.text == '📈Buy TON', state='*')
@@ -46,6 +45,7 @@ async def buy_ton(message: types.Message):
 #Покупка монет(кнопка)
 @dp.callback_query_handler(lambda call: call.data.startswith('buy_ton'), state='*')
 async def keyton(call: types.CallbackQuery):
+    await call.answer()
     state = dp.current_state(user=call.from_user.id)
     await state.set_state(States.AMOUNT)
     await bot.send_message(call.from_user.id, "<b>Enter the amount of TON you want to buy:</b>")
@@ -53,26 +53,31 @@ async def keyton(call: types.CallbackQuery):
 #Покупка монет(количество)
 @dp.message_handler(state=States.AMOUNT)
 async def amount_state(message: types.Message):
-    if message.text.isdigit():
-        if int(message.text) > 0:
-            if buy_ton1(message.from_user.id, int(message.text)) != False:
-                await message.reply(buy_ton1(message.from_user.id, int(message.text)), reply_markup=auth)
+    if message.text.replace(".", "").isdigit():
+        amount = float(message.text.replace(",", ".")) * 100
+        if int(amount) > 0:
+            if buy_ton1(message.from_user.id, int(amount)) != False:
+                await message.reply(buy_ton1(message.from_user.id, int(amount)), reply_markup=auth)
             else:
                 await message.answer("<b>You do not have enough money</b>")
         else:
             await message.answer("<b>Enter correct amount</b>")
+    else:
+            await message.answer("<b>Press the button and enter correct amount</b>")
     state = dp.current_state(user=message.from_user.id)
     await state.reset_state()
     
 #Покупка монет(да)
 @dp.callback_query_handler(lambda call: call.data.startswith('yes_buy_ton'), state='*')
 async def buy_ton_yes(call: types.CallbackQuery):
-    await bot.send_message(call.from_user.id, buy_ton2(call.from_user.id, int(call.message.text.split(' ')[-2].replace('.', ''))), reply_markup=auth)
+    await call.answer()
+    await bot.send_message(call.from_user.id, buy_ton2(call.from_user.id, int(call.message.text.split(' ')[-2].replace('.', ''))))
 
 #Покупка монет(нет)
 @dp.callback_query_handler(lambda call: call.data.startswith('no_buy_ton'), state='*')
 async def buy_ton_no(call: types.CallbackQuery):
+    await call.answer()
     if call.from_user.id in admin_id:
-        await bot.send_message(call.from_user.id, "No", reply_markup=admin_markup)
+        await bot.send_message(call.from_user.id, "No")
     else:
-        await bot.send_message(call.from_user.id, "Purchase canceled", reply_markup=user_markup)
+        await call.message.edit_text('Purchase canceled')

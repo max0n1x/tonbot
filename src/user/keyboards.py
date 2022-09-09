@@ -4,7 +4,7 @@ from src.bot import *
 button1 = kb('💰Balance')
 button2 = kb('📈Buy TON')
 button3 = kb('🏦Deposit')
-user_markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add(
+user_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
     button1, button2, button3
 )
 

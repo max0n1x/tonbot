@@ -70,10 +70,7 @@ async def checkdep(call: types.CallbackQuery):
         await call.answer('Wait 5 minutes before next checking')
     elif wallet_bal >= w3.toWei(minimal_amount / bnb_price, 'ether'):
         text=a2(call.from_user.id)
-        if call.from_user.id in admin_id:
-            await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id, text=text, reply_markup=admin_markup)
-        else:
-            await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id, text=text, reply_markup=user_markup)
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id, text=text)
         await call.answer()
         await sleep(30)
         req = a3()

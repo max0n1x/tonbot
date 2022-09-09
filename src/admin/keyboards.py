@@ -6,7 +6,7 @@ button2 = kb('📈Buy TON')
 button3 = kb('🏦Deposit')
 button4 = kb('📊Статистика')
 button5 = kb('🚨Админка')
-admin_markup = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True).add(
+admin_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
     button1, button2, button3, button4, button5
 )
 

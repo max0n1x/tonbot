@@ -2,10 +2,11 @@ from src.bot import *
 from src.defs import *
 from src.sqlite import *
 from src.admin.keyboards import *
+from src.admin.add_balance import *
 
 #Добавление баланса тон
 def add_balance_ton(val):
-    global id_balance
+    id_balance = azaza()
     res = cursor.execute(f'SELECT ton FROM main WHERE id = {id_balance}').fetchone()[0]
     if val.startswith('+'):
         val = val.replace('+', '')
@@ -25,6 +26,7 @@ def add_balance_ton(val):
 #Добавление баланс(TON)
 @dp.callback_query_handler(lambda call: call.data.startswith('ton_bal_change'), state='*')
 async def pashalka(call: types.CallbackQuery):
+    await call.answer()
     state = dp.current_state(user=call.from_user.id)
     await state.set_state(States.AMOUNT_TON)
     await bot.send_message(call.from_user.id, "<b>Введите сумму(прим. <code>+1488</code> - добавить, <code>-1488</code> - отнять, <code>1488</code> - переписать):</b>")

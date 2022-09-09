@@ -3,10 +3,6 @@ from src.bot import *
 from src.defs import *
 from src.sqlite import *
 
-curs = 100
-cursor.execute(f'INSERT INTO money (curs) VALUES ({curs})')
-sqlite.commit()
-
 #Изменение курса путём коэффициента
 def price(kf):
     curs = 100
