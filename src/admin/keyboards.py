@@ -12,7 +12,7 @@ admin_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
 
 #кнопки админка
 admin_mar = InlineKeyboardMarkup(True)
-admin_mar.add(InlineKeyboardButton('Изменить баланс', callback_data = 'admin_bal'), InlineKeyboardButton('Изменить курс', callback_data = 'admin_curs'))
+admin_mar.add(InlineKeyboardButton('Изменить баланс', callback_data = 'admin_bal'), InlineKeyboardButton('Изменить курс', callback_data = 'admin_curs'), InlineKeyboardButton('Узнать баланс пользователя', callback_data = 'check_bal_user'))
 
 #выбор валюты изменения баланса
 valuta = InlineKeyboardMarkup(True)

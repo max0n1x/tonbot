@@ -19,4 +19,5 @@ class States(StatesGroup):
     USER_ID = State()
     AMOUNT_USD = State()
     AMOUNT_TON = State()
+    CHECK_BAL_USER = State()
 
